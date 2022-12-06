@@ -47,19 +47,19 @@ public:
 
     Relation rename(vector<string> attributes);
 
-  /*  string toString() {
-        stringstream ss;
-        for (auto row : this->rows) {
-
-
-        }
-
-    }*/
-
-
     void toString();
 
     int numTuples();
+
+
+
+    Relation naturalJoin(Relation relationToJoin);
+
+    Relation unionRelation(Relation relationFromRuleEval);
+
+    bool isJoinable(Tuple tuple, Tuple tuple1, vector<pair<int, int>> vector);
+
+    void setRows(Tuple tuple);
 };
 
 

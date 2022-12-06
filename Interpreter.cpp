@@ -49,8 +49,6 @@ for(auto &&query:program.getQueries()){
     for(unsigned int i = 0; i < query.getParams().size(); i++){
        if (query.getParams().at(i).isConstant() == true){
            relationCopy = relationCopy.select(i,query.getParams().at(i).toString());
-
-
        }
 
        else{
@@ -105,21 +103,27 @@ for(auto &&query:program.getQueries()){
         cout << "No" << endl;
 
     }
-
-
-
 }
-
-
-
 }
 void Interpreter::interpretRules() {
+    cout << "Rule Evaluation" << endl;
+    for(auto &&rule:program.getRules()){
+        cout << rule.getHeadPredicate().toString() << "." << endl;
+
+        // Evaluate right hand side predicates
+
+    }
+
+
+
+
 
 }
 
 Database Interpreter::database1() {
     intepretSchemes();
     interpretFacts();
+    interpretRules();
     interpretQueries();
 
 

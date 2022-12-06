@@ -19,6 +19,8 @@ public:
     Rule()=default;
     void addHeadPredicate(Predicate pred);
     void addBodyPredicate(Predicate pred);
+    Predicate getHeadPredicate();
+    vector<Predicate> getBodyPredicates();
     string toString();
 
 };

@@ -35,6 +35,7 @@ public:
     vector<Predicate> getFacts();
 
     vector<Predicate> getQueries();
+    vector<Rule> getRules();
 };
 
 

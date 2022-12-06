@@ -67,3 +67,7 @@ vector<Predicate> DatalogProgram::getQueries() {
     return queries;
 }
 
+vector<Rule> DatalogProgram::getRules() {
+    return rules;
+}
+

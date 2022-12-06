@@ -28,3 +28,12 @@ string Rule::toString() {
 
     return ss.str();
 }
+
+Predicate Rule::getHeadPredicate() {
+    return headPredicate;
+}
+
+vector<Predicate> Rule::getBodyPredicates() {
+    return predicates;
+
+}
