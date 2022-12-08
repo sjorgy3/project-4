@@ -6,14 +6,11 @@
 #define PROJECT_2_RELATION_H
 #include <string>
 #include "Header.h"
-#include "Relation.h"
 #include "Tuple.h"
 #include <set>
 #include <list>
 #include <sstream>
 using namespace std;
-
-
 
 class Relation {
 private:
@@ -23,7 +20,7 @@ private:
 public:
     Relation() = default;
 
-    Relation(string newName, Header newHeader) {
+    Relation(const string &newName, const Header& newHeader) {
         this->name = newName;
         this->givenHeader = newHeader;
     }
@@ -57,9 +54,7 @@ public:
 
     bool unionRelation(Relation relationFromRuleEval);
 
-    bool isJoinable(Tuple tuple, Tuple tuple1, const vector<pair<unsigned int, int>>& vector);
-
-    void setRows(Tuple tuple);
+    bool isJoinable(Tuple tuple, Tuple tuple1, const vector<pair<unsigned int, unsigned int>>& vector);
 
 };
 
