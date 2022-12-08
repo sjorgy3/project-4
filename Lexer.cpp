@@ -79,11 +79,11 @@ vector<Token *> Lexer::Run(std::string& input) {
 
 
 
-        for(unsigned int i = 0; i < (int)automata.size(); i++){
-            inputRead = automata.at(i)->Start(input);
+        for(auto & automaton : automata){
+            inputRead = automaton->Start(input);
             if (inputRead > maxRead) {
                 maxRead = inputRead;
-                maxAutomatonation = automata.at(i);
+                maxAutomatonation = automaton;
 
             }
 

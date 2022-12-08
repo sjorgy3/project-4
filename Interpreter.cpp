@@ -6,24 +6,23 @@
 #include "Interpreter.h"
 
 void Interpreter::intepretSchemes() {
-    for(auto &&scheme:program.getSchemes()){
+    for (auto &&scheme:program.getSchemes()) {
         Header newHeader;
         for (unsigned int i = 0; i < scheme.getParams().size(); ++i) {
             newHeader.addToHeader(scheme.getParams().at(i).toString());
         }
-        Relation newRelation(scheme.getName(),newHeader);
+        Relation newRelation(scheme.getName(), newHeader);
         database.addRelation(newRelation);
 
     }
 
 
-
 }
 
 void Interpreter::interpretFacts() {
-    for(auto &&fact:program.getFacts()){
+    for (auto &&fact:program.getFacts()) {
         Tuple newTuple;
-        for (unsigned int i = 0; i < fact.getParams().size(); i++){
+        for (unsigned int i = 0; i < fact.getParams().size(); i++) {
             newTuple.addValue(fact.getParams().at(i).toString());
 
         }
@@ -33,104 +32,90 @@ void Interpreter::interpretFacts() {
 }
 
 
-
-
 void Interpreter::interpretQueries() {
-cout << "Query Evaluation" << endl;
-for(auto &&query:program.getQueries()){
-    cout << query.toString() << "?" << " ";
+    cout << "Query Evaluation" << endl;
+    for (auto &&query:program.getQueries()) {
+        cout << query.toString() << "?" << " ";
 
-    Relation relationCopy =  database.getRelationCopy(query.getName());
+        Relation relationCopy = database.getRelationCopy(query.getName());
 
-    map<string,int>variables;
-    vector<string>values;
-    vector<int>indices;
-
-
-    for(unsigned int i = 0; i < query.getParams().size(); i++){
-       if (query.getParams().at(i).isConstant()){
-           relationCopy = relationCopy.select(i,query.getParams().at(i).toString());
-       }
-
-       else{
-           if(variables.find(query.getParams().at(i).toString()) != variables.end()){
-              relationCopy= relationCopy.select2(variables[query.getParams().at(i).toString()], i);
-
-           }
-           else{
-               variables.insert({query.getParams().at(i).toString(), i});
-               values.push_back(query.getParams().at(i).toString());
-               indices.push_back(i);
-
-           }
-       }
-
-   }
-
-    relationCopy = relationCopy.project(indices);
-
-    relationCopy = relationCopy.rename(values);
-
-    if(relationCopy.numTuples() > 0){
-        cout << "Yes" << "(" << relationCopy.numTuples() << ")" << endl;
-        for(auto t: relationCopy.getRows()){
-            if(!relationCopy.getHeader().getAttributes().empty()){
-
-                for (unsigned int i = 0; i < t.getValues().size()-1; ++i) {
-                    if ( i < 1) {
-                        cout << "  " << relationCopy.getHeader().getAttributes().at(i) << "=";
-                        cout << t.getValue(i) << ",";
-                    }
-                    else{
-                        cout << " " << relationCopy.getHeader().getAttributes().at(i) << "=";
-                        cout << t.getValue(i) << ",";
-                    }
+        map<string, int> variables;
+        vector<string> values;
+        vector<int> indices;
 
 
-                }
-                if(t.getValues().size() == 1){
-                    cout << "  " << relationCopy.getHeader().getAttributes().at(t.getValues().size()-1) << "=";
-                    cout << t.getValue(t.getValues().size()-1) << endl;
-                }
-                else {
-                    cout << " " << relationCopy.getHeader().getAttributes().at(t.getValues().size() - 1) << "=";
-                    cout << t.getValue(t.getValues().size() - 1) << endl;
+        for (unsigned int i = 0; i < query.getParams().size(); i++) {
+            if (query.getParams().at(i).isConstant()) {
+                relationCopy = relationCopy.select(i, query.getParams().at(i).toString());
+            } else {
+                if (variables.find(query.getParams().at(i).toString()) != variables.end()) {
+                    relationCopy = relationCopy.select2(variables[query.getParams().at(i).toString()], i);
+
+                } else {
+                    variables.insert({query.getParams().at(i).toString(), i});
+                    values.push_back(query.getParams().at(i).toString());
+                    indices.push_back(i);
+
                 }
             }
 
         }
-    }
-    else{
-        cout << "No" << endl;
 
-    }
-}
-}
-Relation Interpreter::interpretPredicate(Predicate predicate){
-    Relation relationCopy =  database.getRelationCopy(predicate.getName());
-    map<string,int>variables;
-    vector<string>values;
-    vector<int>indices;
+        relationCopy = relationCopy.project(indices);
+
+        relationCopy = relationCopy.rename(values);
+
+        if (relationCopy.numTuples() > 0) {
+            cout << "Yes" << "(" << relationCopy.numTuples() << ")" << endl;
+            for (auto t: relationCopy.getRows()) {
+                if (!relationCopy.getHeader().getAttributes().empty()) {
+
+                    for (unsigned int i = 0; i < t.getValues().size() - 1; ++i) {
+                        if (i < 1) {
+                            cout << "  " << relationCopy.getHeader().getAttributes().at(i) << "=";
+                            cout << t.getValue(i) << ",";
+                        } else {
+                            cout << " " << relationCopy.getHeader().getAttributes().at(i) << "=";
+                            cout << t.getValue(i) << ",";
+                        }
 
 
-
-
-
-    for(unsigned int i = 0; i < predicate.getParams().size(); i++){
-        if (predicate.getParams().at(i).isConstant() == true){
-            relationCopy = relationCopy.select(i,predicate.getParams().at(i).toString());
-        }
-
-        else{
-            if(variables.find(predicate.getParams().at(i).toString()) != variables.end()){
-                relationCopy= relationCopy.select2(variables[predicate.getParams().at(i).toString()], i);
+                    }
+                    if (t.getValues().size() == 1) {
+                        cout << "  " << relationCopy.getHeader().getAttributes().at(t.getValues().size() - 1) << "=";
+                        cout << t.getValue(t.getValues().size() - 1) << endl;
+                    } else {
+                        cout << " " << relationCopy.getHeader().getAttributes().at(t.getValues().size() - 1) << "=";
+                        cout << t.getValue(t.getValues().size() - 1) << endl;
+                    }
+                }
 
             }
-            else{
+        } else {
+            cout << "No" << endl;
+
+        }
+    }
+}
+
+Relation Interpreter::interpretPredicate(Predicate predicate) {
+    Relation relationCopy = database.getRelationCopy(predicate.getName());
+    map<string, int> variables;
+    vector<string> values;
+    vector<int> indices;
+
+
+    for (unsigned int i = 0; i < predicate.getParams().size(); i++) {
+        if (predicate.getParams().at(i).isConstant() == true) {
+            relationCopy = relationCopy.select(i, predicate.getParams().at(i).toString());
+        } else {
+            if (variables.find(predicate.getParams().at(i).toString()) != variables.end()) {
+                relationCopy = relationCopy.select2(variables[predicate.getParams().at(i).toString()], i);
+
+            } else {
                 variables.insert({predicate.getParams().at(i).toString(), i});
                 values.push_back(predicate.getParams().at(i).toString());
                 indices.push_back(i);
-
 
 
             }
@@ -147,11 +132,12 @@ Relation Interpreter::interpretPredicate(Predicate predicate){
 
     return relationCopy;
 }
-vector<int> Interpreter::projectInd(Rule currRule, Header targRule){
-    vector<int>indToProject;
-    for (unsigned int i = 0; i < currRule.getHeadPredicate().getParams().size(); i++){
-        for (int j = 0; j < targRule.getAttributes().size(); ++j) {
-            if(currRule.getHeadPredicate().getParams().at(i).toString() == targRule.getAttributes().at(j)){
+
+vector<int> Interpreter::projectInd(Rule currRule, Header targRule) {
+    vector<int> indToProject;
+    for (unsigned int i = 0; i < currRule.getHeadPredicate().getParams().size(); i++) {
+        for (unsigned int j = 0; j < targRule.getAttributes().size(); ++j) {
+            if (currRule.getHeadPredicate().getParams().at(i).toString() == targRule.getAttributes().at(j)) {
                 indToProject.push_back(j);
             }
         }
@@ -171,7 +157,7 @@ void Interpreter::interpretRules() {
     while (modified) {
         modified = false;
         numPasses++;
-        for (auto &&rule:program.getRules()) {
+        for (auto rule : program.getRules()) {
             cout << rule.toString() << "." << endl;
             //Evaluate right hand side predicate
             vector<Relation> vecRel;
@@ -189,33 +175,32 @@ void Interpreter::interpretRules() {
             //join the relations together
             if (vecRel.size() == 1) {
                 finalRelation = vecRel.at(0);
-            }
-            else if (vecRel.size() > 1) {
+            } else if (vecRel.size() > 1) {
                 for (unsigned int i = 0; i < vecRel.size() - 1; ++i) {
                     vecRel.at(i + 1) = vecRel.at(i).naturalJoin(vecRel.at(i + 1));
                     finalRelation = vecRel.at(i + 1);
                 }
             }
-           /* for (auto row: finalRelation.getRows()) {
-                for(auto ros: row.getValues()){
-                    cout << ros << ",";
-                }
-                cout << endl;
+            /* for (auto row: finalRelation.getRows()) {
+                 for(auto ros: row.getValues()){
+                     cout << ros << ",";
+                 }
+                 cout << endl;
 
-            }*/
+             }*/
             vector<int> projInd = projectInd(rule, finalRelation.getHeader());
             //project
 
             finalRelation = finalRelation.project(projInd);
 
 
-           /* for (auto row: finalRelation.getRows()) {
-                for(auto ros: row.getValues()){
-                    cout << ros << endl;
-                }
+            /* for (auto row: finalRelation.getRows()) {
+                 for(auto ros: row.getValues()){
+                     cout << ros << endl;
+                 }
 
 
-            }*/
+             }*/
 
             //rename
             finalRelation = finalRelation.rename(origRelation.getHeader().getAttributes());
@@ -229,22 +214,8 @@ void Interpreter::interpretRules() {
 
         }
     }
-    cout <<endl << "Schemes populated after " << numPasses << " passes through the Rules." << endl << endl;
+    cout << endl << "Schemes populated after " << numPasses << " passes through the Rules." << endl << endl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Database Interpreter::database1() {
@@ -257,8 +228,4 @@ Database Interpreter::database1() {
     return this->database;
 }
 
-void Interpreter::interpret() {
-    database1();
-
-}
 
