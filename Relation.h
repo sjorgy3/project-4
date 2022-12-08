@@ -33,19 +33,19 @@ public:
     }
 
 
-    void setHeader(Header header);
+    void setHeader(const Header& header);
     Header getHeader();
 
-    void addTuple(Tuple newTup);
+    void addTuple(const Tuple& newTup);
     set<Tuple> getRows();
 
-    Relation select(int index, string value);
+    Relation select(int index, const string& value);
 
     Relation select2(int index1, int index2);
 
-    Relation project(vector<int> indices);
+    Relation project(const vector<int>& indices);
 
-    Relation rename(vector<string> attributes);
+    Relation rename(const vector<string>& attributes);
 
     void toString();
 
@@ -57,7 +57,7 @@ public:
 
     bool unionRelation(Relation relationFromRuleEval);
 
-    bool isJoinable(Tuple tuple, Tuple tuple1, vector<pair<int, int>> vector);
+    bool isJoinable(Tuple tuple, Tuple tuple1, const vector<pair<int, int>>& vector);
 
     void setRows(Tuple tuple);
 

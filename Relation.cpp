@@ -6,7 +6,7 @@
 #include "Relation.h"
 #include "string"
 
-Relation Relation::select(int index, string value) {
+Relation Relation::select(int index, const string& value) {
     Relation relationToReturn;
     relationToReturn.setHeader(this->givenHeader);
     for (auto row: this->rows){
@@ -73,7 +73,7 @@ Relation Relation::naturalJoin(Relation relationToJoin){
     for(unsigned int i = 0; i < this->getHeader().getAttributes().size(); i++){
         for(unsigned int j = 0; j < relationToJoin.getHeader().getAttributes().size(); j++){
             if (this->getHeader().getAttributes().at(i) == relationToJoin.getHeader().getAttributes().at(j)){
-                matchingColumns.push_back({i,j});
+                matchingColumns.emplace_back(i,j);
             }
         }
     }
@@ -82,12 +82,12 @@ Relation Relation::naturalJoin(Relation relationToJoin){
     for(unsigned int i = 0; i < relationToJoin.getHeader().getAttributes().size(); i++){
         bool isUnique = true;
 
-        for(unsigned int j=0; j < matchingColumns.size(); j++){
-            if(i == matchingColumns.at(j).second){
+        for(auto & matchingColumn : matchingColumns){
+            if(i == matchingColumn.second){
                 isUnique = false;
             }
         }
-        if(isUnique == true){
+        if(isUnique){
             joinedHeader.addToHeader(relationToJoin.getHeader().getAttributes().at(i));
             uniqueColInd.push_back(i);
         }
@@ -96,15 +96,15 @@ Relation Relation::naturalJoin(Relation relationToJoin){
     //end joinHeaders
 
     //start JoinTuples
-    for(auto t1: this->rows){
+    for(const auto& t1: this->rows){
 
         for(auto t2:relationToJoin.getRows()){
 
-            if(isJoinable(t1,t2,matchingColumns) == true){
+            if(isJoinable(t1, t2, matchingColumns)){
                 Tuple tupleToAdd = t1;
-                for(unsigned int i = 0; i < uniqueColInd.size(); i++){
+                for(int i : uniqueColInd){
 
-                    tupleToAdd.addValue(t2.getValue(uniqueColInd.at(i)));
+                    tupleToAdd.addValue(t2.getValue(i));
 
                 }
                 joinedRelation.addTuple(tupleToAdd);
@@ -134,14 +134,14 @@ Relation Relation::select2(int index1, int index2) {
 
 
 
-Relation Relation::project(vector<int> indices) {
+Relation Relation::project(const vector<int>& indices) {
     Relation relationToReturn;
     relationToReturn.setHeader(this->givenHeader);
 
     for(auto row: this->rows){
         Tuple tupleToAdd;
-        for (unsigned int i = 0; i < indices.size(); i++){
-            tupleToAdd.addValue(row.getValue(indices.at(i)));
+        for (int index : indices){
+            tupleToAdd.addValue(row.getValue(index));
         }
         relationToReturn.addTuple(tupleToAdd);
     }
@@ -150,11 +150,11 @@ Relation Relation::project(vector<int> indices) {
     return relationToReturn;
 }
 
-Relation Relation::rename(vector<string> attributes) {
+Relation Relation::rename(const vector<string>& attributes) {
     Relation relationToReturn;
     Header headerToReturn;
-    for (unsigned int i = 0; i < attributes.size(); i++){
-        headerToReturn.addToHeader(attributes.at(i));
+    for (auto & attribute : attributes){
+        headerToReturn.addToHeader(attribute);
     }
     relationToReturn.setHeader(headerToReturn);
     relationToReturn.rows = this->rows;
@@ -166,12 +166,12 @@ Relation Relation::rename(vector<string> attributes) {
 
 
 
-void Relation::setHeader(Header header) {
+void Relation::setHeader(const Header& header) {
     this->givenHeader = header;
 }
 
 
-void Relation::addTuple(Tuple newTup) {
+void Relation::addTuple(const Tuple& newTup) {
     this->rows.insert(newTup);
 
 }
@@ -193,10 +193,10 @@ Header Relation::getHeader() {
     return this->givenHeader;
 }
 
-bool Relation::isJoinable(Tuple tuple, Tuple tuple2, vector<pair<int, int>> matchingHeader) {
+bool Relation::isJoinable(Tuple tuple, Tuple tuple2, const vector<pair<int, int>>& matchingHeader) {
     bool joinable = true;
-    for(unsigned int i = 0; i < matchingHeader.size(); i++){
-        if(tuple.getValues().at(matchingHeader.at(i).first) != tuple2.getValues().at(matchingHeader.at(i).second)){
+    for(auto & i : matchingHeader){
+        if(tuple.getValues().at(i.first) != tuple2.getValues().at(i.second)){
             joinable = false;
         }
     }
