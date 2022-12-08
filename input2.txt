@@ -1,23 +1,22 @@
 Schemes:
-  snap(S,N,A,P)
-  csg(C,S,G)
-  cn(C,N)
-  ncg(N,C,G)
+   F(A,B)
+   G(A,B)
+   H(A,B)
 
 Facts:
-  snap('12345','C. Brown','12 Apple St.','555-1234').
-  snap('22222','P. Patty','56 Grape Blvd','555-9999').
-  snap('33333','Snoopy','12 Apple St.','555-1234').
-  csg('CS101','12345','A').
-  csg('CS101','22222','B').
-  csg('CS101','33333','C').
-  csg('EE200','12345','B+').
-  csg('EE200','22222','B').
+   F('1','2').
+   G('2','3').
+   H('3','2').
+   H('2','3').
 
 Rules:
-  cn(c,n) :- snap(S,n,A,P),csg(c,S,G).
-  ncg(n,c,g) :- snap(S,n,A,P),csg(c,S,g).
+   G(b,a):-H(b,a),F(b,a).
+   F(a,b):-G(a,b),H(a,b).
+   H(a,b):-F(a,b),G(a,b).
 
 Queries:
-  cn('CS101',Name)?
-  ncg('Snoopy',Course,Grade)?
+   F(a,b)?
+   G(a,b)?
+   H(a,b)?
+   F('2',b)?
+   G(a,'2')?

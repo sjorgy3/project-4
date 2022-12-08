@@ -181,31 +181,25 @@ void Interpreter::interpretRules() {
                     finalRelation = vecRel.at(i + 1);
                 }
             }
-            /* for (auto row: finalRelation.getRows()) {
-                 for(auto ros: row.getValues()){
-                     cout << ros << ",";
-                 }
-                 cout << endl;
 
-             }*/
             vector<unsigned int> projInd = projectInd(rule, finalRelation.getHeader());
             //project
 
             finalRelation = finalRelation.project(projInd);
 
 
-            /* for (auto row: finalRelation.getRows()) {
-                 for(auto ros: row.getValues()){
-                     cout << ros << endl;
-                 }
 
-
-             }*/
 
             //rename
             finalRelation = finalRelation.rename(origRelation.getHeader().getAttributes());
             //union
-            modified = origRelation.unionRelation(finalRelation);
+            if(!modified){
+                modified = origRelation.unionRelation(finalRelation);
+            }
+            else{
+                origRelation.unionRelation(finalRelation);
+            }
+
 
 
             *this->database.getRelation2(origRelation.getName()) = origRelation;

@@ -28,11 +28,9 @@ bool Relation::unionRelation(Relation relationFromRuleEval){
     for(auto tupFromEval: tuplesToAdd){
 
         if (this->rows.insert(tupFromEval).second){
-            // this->addTuple(tupFromEval);
-
             addedTuple = true;
 
-            //printing out tuple
+
 
             for(unsigned int i = 0; i < tupFromEval.getValues().size()-1; i++){
                 if ( i < 1){
