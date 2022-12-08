@@ -19,22 +19,43 @@ Relation Relation::select(int index, string value) {
     return relationToReturn;
 }
 
-Relation Relation::unionRelation(Relation relationFromRuleEval){
+bool Relation::unionRelation(Relation relationFromRuleEval){
+    bool addedTuple = false;
+    set<Tuple> currentTuples = this ->getRows();
+    set<Tuple> tuplesToAdd = relationFromRuleEval.getRows();
 
     for(auto tupFromEval: relationFromRuleEval.getRows()){
         if (this->getRows().insert(tupFromEval).second){
             this->addTuple(tupFromEval);
-            for(unsigned int i = 0; i < tupFromEval.getValues().size(); i++){
+            addedTuple = true;
 
-                cout << tupFromEval.getValues().at(i);
+            //printing out tuple
+            for(unsigned int i = 0; i < tupFromEval.getValues().size()-1; i++){
+                if ( i < 1){
+                    cout << "  " << this->getHeader().getAttributes().at(i) << " = ";
+                    cout <<tupFromEval.getValues().at(i)  << ",";
+                }
+                else{
+                    cout << " " << this->getHeader().getAttributes().at(i) << " = ";
+                    cout <<tupFromEval.getValues().at(i)  << ",";                }
+
             }
+            if(tupFromEval.getValues().size() == 1){
+                cout << "  " << this->getHeader().getAttributes().at(tupFromEval.getValues().size()-1) << "=";
+                cout << tupFromEval.getValue(tupFromEval.getValues().size()-1) << endl;
+            }
+            else{
+                cout << " " << this->getHeader().getAttributes().at(tupFromEval.getValues().size()-1) << "=";
+                cout << tupFromEval.getValue(tupFromEval.getValues().size()-1) << endl;
+            }
+
 
         }
     }
 
 
 
-
+return addedTuple;
 
 
 }
@@ -48,13 +69,14 @@ Relation Relation::naturalJoin(Relation relationToJoin){
     //start joinHeader
     joinedHeader = this->getHeader();
     for(unsigned int i = 0; i < this->getHeader().getAttributes().size(); i++){
-        for(unsigned int j = 0; j < relationToJoin.getHeader().getAttributes().size(); i++){
+        for(unsigned int j = 0; j < relationToJoin.getHeader().getAttributes().size(); j++){
             if (this->getHeader().getAttributes().at(i) == relationToJoin.getHeader().getAttributes().at(j)){
                 matchingColumns.push_back({i,j});
             }
         }
     }
     vector<int>uniqueColInd;
+    //track where you placed the unique columns within the new relation.
     for(unsigned int i = 0; i < relationToJoin.getHeader().getAttributes().size(); i++){
         bool isUnique = true;
 
@@ -101,6 +123,7 @@ Relation Relation::select2(int index1, int index2) {
 
     return relationToReturn;
 }
+
 
 
 Relation Relation::project(vector<int> indices) {

@@ -6,6 +6,7 @@
 #define PROJECT_2_PREDICATE_H
 #include <string>
 #include "Parameter.h"
+#include "Relation.h"
 #include <vector>
 #include <sstream>
 
@@ -28,6 +29,8 @@ public:
     }
 
     void clear();
+
+
 };
 
 

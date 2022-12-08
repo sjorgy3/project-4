@@ -55,11 +55,12 @@ public:
 
     Relation naturalJoin(Relation relationToJoin);
 
-    Relation unionRelation(Relation relationFromRuleEval);
+    bool unionRelation(Relation relationFromRuleEval);
 
     bool isJoinable(Tuple tuple, Tuple tuple1, vector<pair<int, int>> vector);
 
     void setRows(Tuple tuple);
+
 };
 
 

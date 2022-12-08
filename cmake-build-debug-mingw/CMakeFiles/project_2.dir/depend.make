@@ -38,9 +38,12 @@ CMakeFiles/project_2.dir/Database.cpp.obj: ../Tuple.h
 
 CMakeFiles/project_2.dir/DatalogProgram.cpp.obj: ../DatalogProgram.cpp
 CMakeFiles/project_2.dir/DatalogProgram.cpp.obj: ../DatalogProgram.h
+CMakeFiles/project_2.dir/DatalogProgram.cpp.obj: ../Header.h
 CMakeFiles/project_2.dir/DatalogProgram.cpp.obj: ../Parameter.h
 CMakeFiles/project_2.dir/DatalogProgram.cpp.obj: ../Predicate.h
+CMakeFiles/project_2.dir/DatalogProgram.cpp.obj: ../Relation.h
 CMakeFiles/project_2.dir/DatalogProgram.cpp.obj: ../Rule.h
+CMakeFiles/project_2.dir/DatalogProgram.cpp.obj: ../Tuple.h
 
 CMakeFiles/project_2.dir/EOFAutomaton.cpp.obj: ../Automaton.h
 CMakeFiles/project_2.dir/EOFAutomaton.cpp.obj: ../EOFAutomaton.cpp
@@ -116,22 +119,28 @@ CMakeFiles/project_2.dir/Parameter.cpp.obj: ../Parameter.h
 
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../Automaton.h
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../DatalogProgram.h
+CMakeFiles/project_2.dir/Parser.cpp.obj: ../Header.h
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../Lexer.h
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../Parameter.h
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../Parser.cpp
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../Parser.h
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../Predicate.h
+CMakeFiles/project_2.dir/Parser.cpp.obj: ../Relation.h
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../Rule.h
 CMakeFiles/project_2.dir/Parser.cpp.obj: ../Token.h
+CMakeFiles/project_2.dir/Parser.cpp.obj: ../Tuple.h
 
 CMakeFiles/project_2.dir/PeriodAutomaton.cpp.obj: ../Automaton.h
 CMakeFiles/project_2.dir/PeriodAutomaton.cpp.obj: ../PeriodAutomaton.cpp
 CMakeFiles/project_2.dir/PeriodAutomaton.cpp.obj: ../PeriodAutomaton.h
 CMakeFiles/project_2.dir/PeriodAutomaton.cpp.obj: ../Token.h
 
+CMakeFiles/project_2.dir/Predicate.cpp.obj: ../Header.h
 CMakeFiles/project_2.dir/Predicate.cpp.obj: ../Parameter.h
 CMakeFiles/project_2.dir/Predicate.cpp.obj: ../Predicate.cpp
 CMakeFiles/project_2.dir/Predicate.cpp.obj: ../Predicate.h
+CMakeFiles/project_2.dir/Predicate.cpp.obj: ../Relation.h
+CMakeFiles/project_2.dir/Predicate.cpp.obj: ../Tuple.h
 
 CMakeFiles/project_2.dir/Q_MarkAutomaton.cpp.obj: ../Automaton.h
 CMakeFiles/project_2.dir/Q_MarkAutomaton.cpp.obj: ../Q_MarkAutomaton.cpp
@@ -153,10 +162,13 @@ CMakeFiles/project_2.dir/Right_ParenAutomaton.cpp.obj: ../Right_ParenAutomaton.c
 CMakeFiles/project_2.dir/Right_ParenAutomaton.cpp.obj: ../Right_ParenAutomaton.h
 CMakeFiles/project_2.dir/Right_ParenAutomaton.cpp.obj: ../Token.h
 
+CMakeFiles/project_2.dir/Rule.cpp.obj: ../Header.h
 CMakeFiles/project_2.dir/Rule.cpp.obj: ../Parameter.h
 CMakeFiles/project_2.dir/Rule.cpp.obj: ../Predicate.h
+CMakeFiles/project_2.dir/Rule.cpp.obj: ../Relation.h
 CMakeFiles/project_2.dir/Rule.cpp.obj: ../Rule.cpp
 CMakeFiles/project_2.dir/Rule.cpp.obj: ../Rule.h
+CMakeFiles/project_2.dir/Rule.cpp.obj: ../Tuple.h
 
 CMakeFiles/project_2.dir/RulesAutomaton.cpp.obj: ../Automaton.h
 CMakeFiles/project_2.dir/RulesAutomaton.cpp.obj: ../RulesAutomaton.cpp

@@ -12,17 +12,26 @@ class Interpreter {
 private:
     DatalogProgram program;
     Database database;
+    bool isDone;
+
+
 public:
+
     Interpreter(DatalogProgram program){
         this->program = program;
 
     }
     Database database1();
-    void interpret();
+
     void intepretSchemes();
     void interpretFacts();
     void interpretRules();
     void interpretQueries();
+
+    void interpret();
+
+    Relation interpretPredicate(Predicate predicate);
+    vector<int> projectInd(Rule currRule, Header targRule);
 
 
 };

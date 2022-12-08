@@ -34,8 +34,9 @@ void Interpreter::interpretFacts() {
 
 
 
-void Interpreter::interpretQueries() {
 
+void Interpreter::interpretQueries() {
+cout << "Query evaluation" << endl;
 for(auto &&query:program.getQueries()){
     cout << query.toString() << "?" << " ";
 
@@ -47,7 +48,7 @@ for(auto &&query:program.getQueries()){
 
 
     for(unsigned int i = 0; i < query.getParams().size(); i++){
-       if (query.getParams().at(i).isConstant() == true){
+       if (query.getParams().at(i).isConstant()){
            relationCopy = relationCopy.select(i,query.getParams().at(i).toString());
        }
 
@@ -105,20 +106,129 @@ for(auto &&query:program.getQueries()){
     }
 }
 }
-void Interpreter::interpretRules() {
-    cout << "Rule Evaluation" << endl;
-    for(auto &&rule:program.getRules()){
-        cout << rule.getHeadPredicate().toString() << "." << endl;
+Relation Interpreter::interpretPredicate(Predicate predicate){
+    Relation relationCopy =  database.getRelationCopy(predicate.getName());
+    map<string,int>variables;
+    vector<string>values;
+    vector<int>indices;
 
-        // Evaluate right hand side predicates
+
+
+
+
+    for(unsigned int i = 0; i < predicate.getParams().size(); i++){
+        if (predicate.getParams().at(i).isConstant() == true){
+            relationCopy = relationCopy.select(i,predicate.getParams().at(i).toString());
+        }
+
+        else{
+            if(variables.find(predicate.getParams().at(i).toString()) != variables.end()){
+                relationCopy= relationCopy.select2(variables[predicate.getParams().at(i).toString()], i);
+
+            }
+            else{
+                variables.insert({predicate.getParams().at(i).toString(), i});
+                values.push_back(predicate.getParams().at(i).toString());
+                indices.push_back(i);
+
+
+
+            }
+
+        }
+
 
     }
 
 
+    relationCopy = relationCopy.project(indices);
+
+    relationCopy = relationCopy.rename(values);
+
+    return relationCopy;
+}
+vector<int> Interpreter::projectInd(Rule currRule, Header targRule){
+    vector<int>indToProject;
+    for (unsigned int i = 0; i < currRule.getHeadPredicate().getParams().size(); i++){
+        for (int j = 0; j < targRule.getAttributes().size(); ++j) {
+            if(currRule.getHeadPredicate().getParams().at(i).toString() == targRule.getAttributes().at(j)){
+                indToProject.push_back(j);
+            }
+        }
+    }
 
 
+    return indToProject;
 
 }
+
+void Interpreter::interpretRules() {
+
+
+    cout << "Rule Evaluation" << endl;
+    bool modified = true;
+    int numPasses = 0;
+    while (modified) {
+        modified = false;
+        numPasses++;
+        for (auto &&rule:program.getRules()) {
+            cout << rule.toString() << "." << endl;
+            //Evaluate right hand side predicate
+            vector<Relation> vecRel;
+            vector<Predicate> predList = rule.getBodyPredicates();
+            Relation origRelation = this->database.getRelationCopy(rule.getHeadPredicate().getName());
+            Relation finalRelation;
+
+            for (auto p : predList) {
+                Relation evalRelation = interpretPredicate(p);
+                vecRel.push_back(evalRelation);
+
+
+            }
+
+            //join the relations together
+            if (vecRel.size() == 1) {
+                finalRelation = vecRel.at(0);
+            }
+            else if (vecRel.size() > 1) {
+                for (unsigned int i = 0; i < vecRel.size() - 1; ++i) {
+                    vecRel.at(i + 1) = vecRel.at(i).naturalJoin(vecRel.at(i + 1));
+                    finalRelation = vecRel.at(i + 1);
+                }
+
+            }
+            vector<int> projInd = projectInd(rule, finalRelation.getHeader());
+            //project
+            finalRelation = finalRelation.project(projInd);
+            //rename
+            finalRelation = finalRelation.rename(origRelation.getHeader().getAttributes());
+            //union
+            modified = origRelation.unionRelation(finalRelation);
+
+
+            *this->database.getRelation2(origRelation.getName()) = origRelation;
+
+            // modified = this->database.getRelation2(finalRelation.getName())->unionRelation(finalRelation);
+
+        }
+    }
+    cout <<endl << endl << "Schemes populated after " << numPasses << " passes through the Rules." << endl << endl;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Database Interpreter::database1() {
     intepretSchemes();
