@@ -156,7 +156,7 @@ void Interpreter::interpretRules() {
     unsigned int numPasses = 0;
     while (modified) {
         modified = false;
-        numPasses++;
+
         for (auto rule : program.getRules()) {
             cout << rule.toString() << "." << endl;
             //Evaluate right hand side predicate
@@ -213,6 +213,7 @@ void Interpreter::interpretRules() {
             // modified = this->database.getRelation2(finalRelation.getName())->unionRelation(finalRelation);
 
         }
+        numPasses++;
     }
     cout << endl << "Schemes populated after " << numPasses << " passes through the Rules." << endl << endl;
 }
