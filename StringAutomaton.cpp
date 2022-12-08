@@ -15,7 +15,7 @@ void StringAutomaton::S0(const std::string& input) {
 }
 void StringAutomaton::S1(const std::string& input) {
 
-    if(index> (int)input.size()-1){
+    if(index> input.size()-1){
         inputRead=0;
     }
     else if(input[index] == '\n'){

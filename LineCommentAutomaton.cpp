@@ -17,7 +17,7 @@ void LineCommentAutomaton::S0(const std::string& input) {
 
 
 void LineCommentAutomaton::S1(const std::string& input){
-    if(index == (int)input.size()){
+    if(index == input.size()){
         return;
     }
     else if (input[index] == '|'){

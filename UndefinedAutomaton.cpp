@@ -38,7 +38,7 @@ void UndefinedAutomaton::S1(const std::string& input) {
     }
 }
 void UndefinedAutomaton::S2(const std::string& input){
-    if(index == (int)input.size()){
+    if(index == input.size()){
         return;
     }
     else if (input[index] == '\n'){
@@ -65,7 +65,7 @@ void UndefinedAutomaton::S2(const std::string& input){
     }
 }
 void UndefinedAutomaton::S3(const std::string& input){
-    if(index> (int)input.size()-1){
+    if(index> input.size()-1){
         return;
     }
     else if (input[index] == '\n'){
@@ -108,7 +108,7 @@ void UndefinedAutomaton::S4(const std::string &input) {
 }
 void UndefinedAutomaton::S5(const std::string& input) {
 
-    if(index> (int)input.size()-1){
+    if(index> input.size()-1){
         return;
     }
     else if (input[index] == '\n'){
@@ -154,7 +154,7 @@ void UndefinedAutomaton::S5(const std::string& input) {
 
 
 /*void UndefinedAutomaton::S2(const std::string& input){
-    if(index > (int)input.size()-1){
+    if(index > input.size()-1){
         inputRead++;
     }
     else if (input[index] != '|') {
@@ -174,7 +174,7 @@ void UndefinedAutomaton::S5(const std::string& input) {
     }
 }
 void UndefinedAutomaton::S3(const std::string& input){
-    if(index > (int)input.size()-1){
+    if(index > input.size()-1){
         inputRead++;
     }
     else if (input[index] != '#') {
@@ -188,7 +188,7 @@ void UndefinedAutomaton::S3(const std::string& input){
     }
 }
 void UndefinedAutomaton::S4(const std::string& input){
-    if(index > (int)input.size()-1){
+    if(index > input.size()-1){
         inputRead++;
     }
     else if(input[index] == '|') {

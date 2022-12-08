@@ -124,13 +124,13 @@ vector<Token *> Lexer::Run(std::string& input) {
     EOFToken = new Token(TokenType:: ENDOFFILE, "", lineNumber);
     tokens.push_back(EOFToken);
 
-   /* for (unsigned int i = 0; i < (int)tokens.size(); i++){
+   /* for (unsigned int i = 0; i < tokens.size(); i++){
 
         tokens.at(i)->ToString();
 
     }*/
 
-    //cout<<"Total Tokens = " << (int)tokens.size();
+    //cout<<"Total Tokens = " << tokens.size();
 
 
 
