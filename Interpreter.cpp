@@ -36,7 +36,7 @@ void Interpreter::interpretFacts() {
 
 
 void Interpreter::interpretQueries() {
-cout << "Query evaluation" << endl;
+cout << "Query Evaluation" << endl;
 for(auto &&query:program.getQueries()){
     cout << query.toString() << "?" << " ";
 
@@ -195,11 +195,28 @@ void Interpreter::interpretRules() {
                     vecRel.at(i + 1) = vecRel.at(i).naturalJoin(vecRel.at(i + 1));
                     finalRelation = vecRel.at(i + 1);
                 }
-
             }
+           /* for (auto row: finalRelation.getRows()) {
+                for(auto ros: row.getValues()){
+                    cout << ros << ",";
+                }
+                cout << endl;
+
+            }*/
             vector<int> projInd = projectInd(rule, finalRelation.getHeader());
             //project
+
             finalRelation = finalRelation.project(projInd);
+
+
+           /* for (auto row: finalRelation.getRows()) {
+                for(auto ros: row.getValues()){
+                    cout << ros << endl;
+                }
+
+
+            }*/
+
             //rename
             finalRelation = finalRelation.rename(origRelation.getHeader().getAttributes());
             //union
@@ -212,7 +229,7 @@ void Interpreter::interpretRules() {
 
         }
     }
-    cout <<endl << endl << "Schemes populated after " << numPasses << " passes through the Rules." << endl << endl;
+    cout <<endl << "Schemes populated after " << numPasses << " passes through the Rules." << endl << endl;
 }
 
 

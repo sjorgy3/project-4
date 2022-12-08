@@ -23,20 +23,24 @@ bool Relation::unionRelation(Relation relationFromRuleEval){
     bool addedTuple = false;
     set<Tuple> currentTuples = this ->getRows();
     set<Tuple> tuplesToAdd = relationFromRuleEval.getRows();
+    //only producing 3 tuples to add
 
-    for(auto tupFromEval: relationFromRuleEval.getRows()){
-        if (this->getRows().insert(tupFromEval).second){
-            this->addTuple(tupFromEval);
+    for(auto tupFromEval: tuplesToAdd){
+
+        if (this->rows.insert(tupFromEval).second){
+            // this->addTuple(tupFromEval);
+
             addedTuple = true;
 
             //printing out tuple
+
             for(unsigned int i = 0; i < tupFromEval.getValues().size()-1; i++){
                 if ( i < 1){
-                    cout << "  " << this->getHeader().getAttributes().at(i) << " = ";
+                    cout << "  " << this->getHeader().getAttributes().at(i) << "=";
                     cout <<tupFromEval.getValues().at(i)  << ",";
                 }
                 else{
-                    cout << " " << this->getHeader().getAttributes().at(i) << " = ";
+                    cout << " " << this->getHeader().getAttributes().at(i) << "=";
                     cout <<tupFromEval.getValues().at(i)  << ",";                }
 
             }
@@ -56,8 +60,6 @@ bool Relation::unionRelation(Relation relationFromRuleEval){
 
 
 return addedTuple;
-
-
 }
 
 Relation Relation::naturalJoin(Relation relationToJoin){
@@ -94,18 +96,24 @@ Relation Relation::naturalJoin(Relation relationToJoin){
     //end joinHeaders
 
     //start JoinTuples
-    for(auto t1: this->getRows()){
-        Tuple tupleToAdd = t1;
-        for(auto t2:relationToJoin.getRows()){
-            if(isJoinable(t1,t2,matchingColumns) == true){
-                for(unsigned int i = 0; i < uniqueColInd.size(); i++){
-                    tupleToAdd.addValue(t2.getValue(uniqueColInd.at(i)));
-                }
-            }
-        }
-        joinedRelation.addTuple(tupleToAdd);
-    }
+    for(auto t1: this->rows){
 
+        for(auto t2:relationToJoin.getRows()){
+
+            if(isJoinable(t1,t2,matchingColumns) == true){
+                Tuple tupleToAdd = t1;
+                for(unsigned int i = 0; i < uniqueColInd.size(); i++){
+
+                    tupleToAdd.addValue(t2.getValue(uniqueColInd.at(i)));
+
+                }
+                joinedRelation.addTuple(tupleToAdd);
+            }
+
+            //joinedRelation.addTuple(tupleToAdd);
+        }
+
+    }
     return joinedRelation;
 }
 
