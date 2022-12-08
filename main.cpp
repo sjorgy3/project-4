@@ -1,10 +1,9 @@
-#include "Lexer.h"
-#include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
+#include "Lexer.h"
 #include "Parser.h"
 #include "Interpreter.h"
-#include <vector>
 
 using namespace std;
 
@@ -29,9 +28,6 @@ int main(int argc, char** argv) {
     Parser* parser = new Parser(tokenVector);
     Interpreter* interpreter = new Interpreter(parser->datalogprogram());
     interpreter->database1();
-
-
-
 
 
 

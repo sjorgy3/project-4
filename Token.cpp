@@ -8,7 +8,7 @@ using namespace std;
 
 
 
-Token::Token(TokenType type, std::string description, int line) {
+Token::Token(TokenType type, std::string description, unsigned int line) {
     token = type;
     textDescription = description;
     tokenLine = line;
@@ -31,7 +31,7 @@ std::string Token::getdescription() {
     return textDescription;
 }
 
-int Token::getLine() {
+unsigned int Token::getLine() {
     return tokenLine;
 }
 

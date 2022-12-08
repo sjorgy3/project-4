@@ -6,7 +6,7 @@
 #define PROJECT_2_INTERPRETER_H
 #include "DatalogProgram.h"
 #include "Database.h"
-
+#include <fstream>
 
 class Interpreter {
 private:

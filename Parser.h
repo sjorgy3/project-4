@@ -16,7 +16,7 @@ class Parser {
 
 private:
 
-    int tokenLocation =0;
+    unsigned int tokenLocation =0;
     vector<Token*>tokens;
     DatalogProgram object;
     set<string>domain;

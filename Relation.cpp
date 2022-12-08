@@ -6,7 +6,7 @@
 #include "Relation.h"
 #include "string"
 
-Relation Relation::select(int index, const string& value) {
+Relation Relation::select(unsigned int index, const string& value) {
     Relation relationToReturn;
     relationToReturn.setHeader(this->givenHeader);
     for (auto row: this->rows){
@@ -77,7 +77,7 @@ Relation Relation::naturalJoin(Relation relationToJoin){
             }
         }
     }
-    vector<int>uniqueColInd;
+    vector<unsigned int>uniqueColInd;
     //track where you placed the unique columns within the new relation.
     for(unsigned int i = 0; i < relationToJoin.getHeader().getAttributes().size(); i++){
         bool isUnique = true;
@@ -102,7 +102,7 @@ Relation Relation::naturalJoin(Relation relationToJoin){
 
             if(isJoinable(t1, t2, matchingColumns)){
                 Tuple tupleToAdd = t1;
-                for(int i : uniqueColInd){
+                for(unsigned int i : uniqueColInd){
 
                     tupleToAdd.addValue(t2.getValue(i));
 
@@ -118,7 +118,7 @@ Relation Relation::naturalJoin(Relation relationToJoin){
 }
 
 
-Relation Relation::select2(int index1, int index2) {
+Relation Relation::select2(unsigned int index1, unsigned int index2) {
     Relation relationToReturn;
     relationToReturn.setHeader(this->givenHeader);
 
@@ -134,13 +134,13 @@ Relation Relation::select2(int index1, int index2) {
 
 
 
-Relation Relation::project(const vector<int>& indices) {
+Relation Relation::project(const vector<unsigned int>& indices) {
     Relation relationToReturn;
     relationToReturn.setHeader(this->givenHeader);
 
     for(auto row: this->rows){
         Tuple tupleToAdd;
-        for (int index : indices){
+        for (unsigned int index : indices){
             tupleToAdd.addValue(row.getValue(index));
         }
         relationToReturn.addTuple(tupleToAdd);
@@ -179,7 +179,7 @@ void Relation::addTuple(const Tuple& newTup) {
 void Relation::toString() {
 
 }
-int Relation::numTuples(){
+unsigned int Relation::numTuples(){
     return this->rows.size();
 }
 
@@ -193,7 +193,7 @@ Header Relation::getHeader() {
     return this->givenHeader;
 }
 
-bool Relation::isJoinable(Tuple tuple, Tuple tuple2, const vector<pair<int, int>>& matchingHeader) {
+bool Relation::isJoinable(Tuple tuple, Tuple tuple2, const vector<pair<unsigned, unsigned int>>& matchingHeader) {
     bool joinable = true;
     for(auto & i : matchingHeader){
         if(tuple.getValues().at(i.first) != tuple2.getValues().at(i.second)){

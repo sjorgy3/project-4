@@ -5,9 +5,9 @@
 class Automaton
 {
 protected:
-    int inputRead = 0;
-    int newLines = 0;
-    int index = 0;
+    unsigned int inputRead = 0;
+    unsigned int newLines = 0;
+    unsigned int index = 0;
     TokenType type;
 
 public:
@@ -20,7 +20,7 @@ public:
     // Start the automaton and return the number of characters read
     //   read == 0 indicates the input was rejected
     //   read  > 0 indicates the input was accepted
-    int Start(const std::string& input) {
+    unsigned int Start(const std::string& input) {
         newLines = 0;
         inputRead = 0;
         index = 0;
@@ -36,9 +36,9 @@ public:
         inputRead = 0;
     }
 
-    virtual Token* CreateToken(std::string input, int lineNumber) { return new Token(type, input, lineNumber); }
+    virtual Token* CreateToken(std::string input, unsigned int lineNumber) { return new Token(type, input, lineNumber); }
 
-    int NewLinesRead() const { return newLines; }
+    unsigned int NewLinesRead() const { return newLines; }
 };
 
 #endif // AUTOMATON_H

@@ -8,7 +8,7 @@
 void Interpreter::intepretSchemes() {
     for (auto &&scheme:program.getSchemes()) {
         Header newHeader;
-        for (unsigned int i = 0; i < scheme.getParams().size(); ++i) {
+        for (Index i = 0; i < scheme.getParams().size(); ++i) {
             newHeader.addToHeader(scheme.getParams().at(i).toString());
         }
         Relation newRelation(scheme.getName(), newHeader);
@@ -41,7 +41,7 @@ void Interpreter::interpretQueries() {
 
         map<string, int> variables;
         vector<string> values;
-        vector<int> indices;
+        vector<unsigned int> indices;
 
 
         for (unsigned int i = 0; i < query.getParams().size(); i++) {
@@ -102,11 +102,11 @@ Relation Interpreter::interpretPredicate(Predicate predicate) {
     Relation relationCopy = database.getRelationCopy(predicate.getName());
     map<string, int> variables;
     vector<string> values;
-    vector<int> indices;
+    vector<unsigned int> indices;
 
 
     for (unsigned int i = 0; i < predicate.getParams().size(); i++) {
-        if (predicate.getParams().at(i).isConstant() == true) {
+        if (predicate.getParams().at(i).isConstant()) {
             relationCopy = relationCopy.select(i, predicate.getParams().at(i).toString());
         } else {
             if (variables.find(predicate.getParams().at(i).toString()) != variables.end()) {
@@ -133,8 +133,8 @@ Relation Interpreter::interpretPredicate(Predicate predicate) {
     return relationCopy;
 }
 
-vector<int> Interpreter::projectInd(Rule currRule, Header targRule) {
-    vector<int> indToProject;
+vector<unsigned int> Interpreter::projectInd(Rule currRule, Header targRule) {
+    vector<unsigned int> indToProject;
     for (unsigned int i = 0; i < currRule.getHeadPredicate().getParams().size(); i++) {
         for (unsigned int j = 0; j < targRule.getAttributes().size(); ++j) {
             if (currRule.getHeadPredicate().getParams().at(i).toString() == targRule.getAttributes().at(j)) {
@@ -153,7 +153,7 @@ void Interpreter::interpretRules() {
 
     cout << "Rule Evaluation" << endl;
     bool modified = true;
-    int numPasses = 0;
+    unsigned int numPasses = 0;
     while (modified) {
         modified = false;
         numPasses++;
@@ -188,7 +188,7 @@ void Interpreter::interpretRules() {
                  cout << endl;
 
              }*/
-            vector<int> projInd = projectInd(rule, finalRelation.getHeader());
+            vector<unsigned int> projInd = projectInd(rule, finalRelation.getHeader());
             //project
 
             finalRelation = finalRelation.project(projInd);

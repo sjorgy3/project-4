@@ -21,7 +21,18 @@ public:
     Relation* getRelation2(string relationName);
     Relation getRelationCopy(string relationName);
 
-
+    Count getRowCount() const
+    {
+        Count rowCount = 0;
+        for(auto table: relations)
+        {
+            for(auto row : table.second.getRows())
+            {
+                rowCount++;
+            }
+        }
+        return rowCount;
+    }
 
 
 };

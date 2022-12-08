@@ -6,8 +6,11 @@
 #define PROJECT_2_TUPLE_H
 
 #include <string>
-#include "vector"
+#include <vector>
 #include <set>
+
+typedef unsigned int Index;
+typedef unsigned int Count;
 
 using namespace std;
 

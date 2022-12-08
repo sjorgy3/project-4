@@ -4,13 +4,13 @@
 
 #ifndef PROJECT_2_RELATION_H
 #define PROJECT_2_RELATION_H
-#include "string"
+#include <string>
 #include "Header.h"
 #include "Relation.h"
 #include "Tuple.h"
-#include "set"
-#include "list"
-#include "sstream"
+#include <set>
+#include <list>
+#include <sstream>
 using namespace std;
 
 
@@ -39,17 +39,17 @@ public:
     void addTuple(const Tuple& newTup);
     set<Tuple> getRows();
 
-    Relation select(int index, const string& value);
+    Relation select(unsigned int index, const string& value);
 
-    Relation select2(int index1, int index2);
+    Relation select2(unsigned int index1, unsigned int index2);
 
-    Relation project(const vector<int>& indices);
+    Relation project(const vector<unsigned int>& indices);
 
     Relation rename(const vector<string>& attributes);
 
     void toString();
 
-    int numTuples();
+    unsigned int numTuples();
 
 
 
@@ -57,7 +57,7 @@ public:
 
     bool unionRelation(Relation relationFromRuleEval);
 
-    bool isJoinable(Tuple tuple, Tuple tuple1, const vector<pair<int, int>>& vector);
+    bool isJoinable(Tuple tuple, Tuple tuple1, const vector<pair<unsigned int, int>>& vector);
 
     void setRows(Tuple tuple);
 

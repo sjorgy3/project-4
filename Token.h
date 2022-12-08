@@ -2,6 +2,9 @@
 #define TOKEN_H
 #include <string>
 
+typedef unsigned int Index;
+typedef unsigned int Count;
+
 enum class TokenType {
     COLON,
     COLON_DASH,
@@ -34,15 +37,15 @@ private:
     // TODO: add member variables for information needed by Token
     TokenType token;
     std::string textDescription;
-    int tokenLine = 0;
+    unsigned int tokenLine = 0;
 
 public:
-    Token(TokenType type, std::string description, int line);
+    Token(TokenType type, std::string description, unsigned int line);
 
     void ToString();
     TokenType getType();
     std::string getdescription();
-    int getLine();
+    unsigned int getLine();
     std::string tokenToSTring(TokenType type);
 
 

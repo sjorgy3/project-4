@@ -58,9 +58,9 @@ void Lexer::CreateAutomata() {
 
 vector<Token *> Lexer::Run(std::string& input) {
     // TODO: convert this pseudo-code with the algorithm into actual C++ code
-    int lineNumber = 1;
-    int inputRead = 0;
-    int maxRead;
+    unsigned int lineNumber = 1;
+    unsigned int inputRead = 0;
+    unsigned int maxRead;
     Automaton * maxAutomatonation;
     Token * newToken;
     Token * EOFToken;
@@ -124,7 +124,7 @@ vector<Token *> Lexer::Run(std::string& input) {
     EOFToken = new Token(TokenType:: ENDOFFILE, "", lineNumber);
     tokens.push_back(EOFToken);
 
-   /* for (int i = 0; i < (int)tokens.size(); i++){
+   /* for (unsigned int i = 0; i < (int)tokens.size(); i++){
 
         tokens.at(i)->ToString();
 
