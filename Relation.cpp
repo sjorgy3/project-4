@@ -66,7 +66,7 @@ Relation Relation::naturalJoin(Relation relationToJoin){
 
     Relation joinedRelation;
     Header joinedHeader;
-    vector<pair<int, int>>matchingColumns;
+    vector<pair<unsigned int, unsigned int>>matchingColumns;
 
     //start joinHeader
     joinedHeader = this->getHeader();

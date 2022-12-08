@@ -17,7 +17,7 @@ private:
 
 public:
 
-    Interpreter(DatalogProgram program){
+    Interpreter(const DatalogProgram &program){
         this->program = program;
 
     }
@@ -28,10 +28,8 @@ public:
     void interpretRules();
     void interpretQueries();
 
-    void interpret();
-
     Relation interpretPredicate(Predicate predicate);
-    vector<int> projectInd(Rule currRule, Header targRule);
+    vector<unsigned int> projectInd(Rule currRule, Header targRule);
 
 
 };
